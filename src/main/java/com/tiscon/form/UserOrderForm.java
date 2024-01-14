@@ -5,6 +5,8 @@ import com.tiscon.validator.Numeric;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
 /**
  * 顧客が入力する見積もり情報を保持するクラス。
@@ -54,6 +56,14 @@ public class UserOrderForm {
 
     @NotNull
     private boolean washingMachineInstallation;
+
+    @Numeric
+    @NotBlank
+    @Max(value = 12, message="1~12の数字を入力して下さい。")
+    @Min(value = 1, message="1~12の数字を入力して下さい。")
+    private String month;
+
+
 
     public String getCustomerName() {
         return customerName;
@@ -149,5 +159,13 @@ public class UserOrderForm {
 
     public void setWashingMachineInstallation(boolean washingMachineInstallation) {
         this.washingMachineInstallation = washingMachineInstallation;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
     }
 }

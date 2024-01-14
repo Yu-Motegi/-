@@ -88,11 +88,21 @@ public class EstimateService {
         // オプションサービスの料金を算出する。
         int priceForOptionalService = 0;
 
+        int n = dto.getMonth();
+        double priceForMonth;
+        if (n==3 || n==4){
+            priceForMonth = 1.5;
+        }else if(n==9){
+            priceForMonth = 1.2;
+        }else{
+            priceForMonth = 1.0;
+        }
+
         if (dto.getWashingMachineInstallation()) {
             priceForOptionalService = estimateDAO.getPricePerOptionalService(OptionalServiceType.WASHING_MACHINE.getCode());
         }
 
-        return priceForDistance + pricePerTruck + priceForOptionalService;
+        return (int) Math.floor((priceForDistance + pricePerTruck )* priceForMonth + priceForOptionalService);
     }
 
     /**
