@@ -152,14 +152,14 @@
 
       <div class="sub-title">お引越しの日時</div>
          <div class="form-group">
-          <label for="month"><font color="red">*</font>引っ越し希望月をご記入ください　　　※数字のみでご記入ください　(例)12月→12</label>
-          <ul th:if="${#fields.hasErrors('month')}">
+          <label for="movingMonth"><font color="red">*</font>引っ越し希望月をご記入ください　　　※数字のみでご記入ください　(例)12月→12</label>
+          <ul th:if="${#fields.hasErrors('movingMonth')}">
             <font color="red">
-            <li th:each="err : ${#fields.errors('month')}" th:text="${err}"></li>
+            <li th:each="err : ${#fields.errors('movingMonth')}" th:text="${err}"></li>
             </font>
           </ul> 
           <br>
-          <input type="text" id="month" name="month" class="form-control" th:field="*{month}"
+          <input type="text" id="movingMonth" name="movingMonth" class="form-control" th:field="*{movingMonth}"
                  value=""/>
                 
         </div>

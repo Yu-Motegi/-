@@ -61,7 +61,7 @@ public class UserOrderForm {
     @NotBlank
     @Max(value = 12, message="1~12の数字を入力して下さい。")
     @Min(value = 1, message="1~12の数字を入力して下さい。")
-    private String month;
+    private String movingMonth;
 
 
 
@@ -161,11 +161,11 @@ public class UserOrderForm {
         this.washingMachineInstallation = washingMachineInstallation;
     }
 
-    public String getMonth() {
-        return month;
+    public String getMovingMonth() {
+        return movingMonth;
     }
 
-    public void setMonth(String month) {
-        this.month = month;
+    public void setMovingMonth(String movingMonth) {
+        this.movingMonth = movingMonth;
     }
 }

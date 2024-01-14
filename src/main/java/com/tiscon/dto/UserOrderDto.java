@@ -26,7 +26,7 @@ public class UserOrderDto {
 
     private boolean washingMachineInstallation;
 
-    private String month;
+    private String movingMonth;
 
     public String getCustomerName() {
         return customerName;
@@ -124,11 +124,11 @@ public class UserOrderDto {
         this.washingMachineInstallation = washingMachineInstallation;
     }
 
-    public int getMonth() {
-        return Integer.parseInt(month);
+    public String getMovingMonth() {
+        return movingMonth;
     }
 
-    public void setMonth(String month) {
-        this.month = month;
+    public void setMovingMonth(String movingMonth) {
+        this.movingMonth = movingMonth;
     }
 }

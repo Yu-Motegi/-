@@ -88,11 +88,11 @@ public class EstimateService {
         // オプションサービスの料金を算出する。
         int priceForOptionalService = 0;
 
-        int n = dto.getMonth();
+        String n = dto.getMovingMonth();
         double priceForMonth;
-        if (n==3 || n==4){
+        if (n=="3" || n=="4"){
             priceForMonth = 1.5;
-        }else if(n==9){
+        }else if(n=="9"){
             priceForMonth = 1.2;
         }else{
             priceForMonth = 1.0;
