@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * 引越し見積もりのコントローラークラス。
@@ -38,6 +39,15 @@ public class EstimateController {
     @GetMapping("")
     String index(Model model) {
         return "top";
+    }
+
+    /**
+     * @param model
+     * @return
+     */
+    @PostMapping("error")
+    String error(Model model) {
+        return "error";
     }
 
     /**
@@ -124,47 +134,44 @@ public class EstimateController {
      * @return 遷移先
      */
     @PostMapping(value = "result", params = "calculation")
-    String calculation(@Validated UserOrderForm userOrderForm, BindingResult result, Model model) {
+ String calculation(@Validated UserOrderForm userOrderForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
-
             model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
             model.addAttribute("userOrderForm", userOrderForm);
             return "confirm";
         }
+        try {
+            UserOrderDto dto = new UserOrderDto();
+            BeanUtils.copyProperties(userOrderForm, dto);
+            Integer price = estimateService.getPrice(dto);
 
-        // 料金の計算を行う。
-        UserOrderDto dto = new UserOrderDto();
-        BeanUtils.copyProperties(userOrderForm, dto);
-        Integer price = estimateService.getPrice(dto);
-
-        model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
-        model.addAttribute("userOrderForm", userOrderForm);
-        model.addAttribute("price", price);
-        return "result";
+            model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
+            model.addAttribute("userOrderForm", userOrderForm);
+            model.addAttribute("price", price);
+            return "result";
+        } catch (Exception e) {
+            // エラーが発生した場合、指定のページにリダイレクトする
+            return "redirect:/error";
+        }
     }
 
-    /**
-     * 申し込み完了画面に遷移する。
-     *
-     * @param userOrderForm 顧客が入力した見積もり依頼情報
-     * @param result        精査結果
-     * @param model         遷移先に連携するデータ
-     * @return 遷移先
-     */
     @PostMapping(value = "order", params = "complete")
     String complete(@Validated UserOrderForm userOrderForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
-
             model.addAttribute("prefectures", estimateDAO.getAllPrefectures());
             model.addAttribute("userOrderForm", userOrderForm);
             return "confirm";
         }
 
-        UserOrderDto dto = new UserOrderDto();
-        BeanUtils.copyProperties(userOrderForm, dto);
-        estimateService.registerOrder(dto);
+        try {
+            UserOrderDto dto = new UserOrderDto();
+            BeanUtils.copyProperties(userOrderForm, dto);
+            estimateService.registerOrder(dto);
 
-        return "complete";
+            return "complete";
+        } catch (Exception e) {
+            // エラーが発生した場合、指定のページにリダイレクトする
+            return "redirect:/error";
+        }
     }
-
 }

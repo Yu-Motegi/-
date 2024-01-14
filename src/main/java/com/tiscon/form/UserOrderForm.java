@@ -5,8 +5,8 @@ import com.tiscon.validator.Numeric;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * 顧客が入力する見積もり情報を保持するクラス。
@@ -20,6 +20,7 @@ public class UserOrderForm {
 
     @NotBlank
     @Numeric
+    @Pattern(regexp="\\d{10,11}", message = "10~11桁の数字で記入してください")
     private String tel;
 
     @Email
@@ -59,8 +60,9 @@ public class UserOrderForm {
 
     @Numeric
     @NotBlank
-    @Max(value = 12, message="1~12の数字を入力して下さい。")
-    @Min(value = 1, message="1~12の数字を入力して下さい。")
+    @Size(min=1,max=12,message="1~12の数字を入力して下さい。")
+    //@Max(value = 12, message="1~12の数字を入力して下さい。")
+    //@Min(value = 1, message="1~12の数字を入力して下さい。")
     private String movingMonth;
 
 
